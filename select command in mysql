@@ -1,0 +1,60 @@
+create database vishal;
+use vishal;
+CREATE TABLE student(
+id INT PRIMARY KEY,
+name VARCHAR(255)
+);
+INSERT INTO student VALUES(1,"tushar");
+SELECT * FROM student;
+DROP DATABASE IF EXISTS TEMP;
+DROP TABLE student;
+CREATE TABLE ORGA(
+worker_id INT NOT NULL PRIMARY KEY auto_increment,
+Firstname VARCHAR(255),
+Lastname VARCHAR(255),
+Salary  INT,
+Joiningdata Date,
+department char(25)
+);
+ALTER TABLE orga RENAME COLUMN joiningdata TO joiningdate;
+truncate table orga;
+INSERT INTO ORGA(worker_id,Firstname,Lastname,Salary,Joiningdate,department)
+Values(1,"harsh","dixit",450000,"2004-10-23","HR"),
+(2,"ram","kumar",35353,"2019-11-22","managing director");
+iNSERT INTO ORGA VALUES(3,"harsh","sharama",150000,"2023-10-23","HR");
+iNSERT INTO ORGA VALUES(4,"Karn","sharama",150000,"2023-10-23","CEO");
+iNSERT INTO ORGA VALUES(6,"vishal","sharama",150000,"2023-10-23","Account");
+create table bonus(
+ worker_ref_id int,
+ bonus int,
+ bonusdate date,
+ foreign key(worker_ref_id) references ORGA(worker_id)
+ ON delete cascade
+);
+Rename table bonus to worker_bonus;
+Select * from ORGA;
+Drop table worker_bonus;
+INSERT INTO Worker_bonus(worker_ref_id,bonus,bonusdate)Values(2,345525,"2020-11-22"),
+(2,32322,"2021-12-21"),
+(1,22123,"2024-1-21");
+Select * from worker_bonus;
+CREATE TABLE Title(
+worker_ref_id int,
+title_assigned char(15),
+foreign key(worker_ref_id) references orga(worker_id)on delete cascade);
+drop table Title;
+drop database sys;
+INSERT INTO Title(worker_ref_id,title_assigned) VALUES(1,"CEO"),(1,"HR"),(2,"CEO");
+-- between command
+select * from orga where salary between 35353 AND 150086;
+-- or command
+SELECT *FROM ORGA where department ="HR" OR department="Account"OR department="CEO";
+-- pattern matching
+select * FROM ORGA WHERE Firstname LIKE"%a_";
+-- order by  default sort table in ascending order
+select * from orga order by salary;
+-- order by sort table in descending order
+select * from orga order by salary desc;
+-- grouping  group by use with aggreagate function count,sum,avg ,min,max
+select department ,count(department) from orga group by department;
+select department ,avg(salary) from orga group by department;
