@@ -1,0 +1,38 @@
+create DATABASE organization;
+use organization;
+create table employee
+(
+  employee_id int primary key,
+  firstname char(15),
+  lastname char(15),
+  address varchar(255),
+  salary int not null default 0,
+  age int,
+  constraint age_pre_chck check(age>17)
+);
+insert into employee(employee_id,firstname,lastname,address,salary,age)values(1,"vishal","raghav","street no.27",177292,18),
+(2,"tushar","raghav","street no.22",832838,19),
+(3,"harsh","digit","street no.363",default,19),
+(4,"aman","kumar","street no.22442",36262,35);
+--  where clause
+select firstname,lastname from employee where salary>172782;
+-- between clauses
+select firstname,lastname,employee_id from employee where employee_id not between 1 AND 7;
+-- in clause
+select *from  employee where salary  in (199999,210474); 
+-- is NULL
+select *from employee where salary is NULL;
+-- pattern matching
+select * from employee where firstname Like "v%";
+-- order By
+select * from employee order by salary desc;
+-- grouping
+select age ,sum(age) from employee group by age;
+select age,firstname,count(age) from employee where age>19 group by age,firstname;
+--  alter operation
+-- ADD
+Alter table employee Add department varchar(255);
+-- column rename
+Alter table  employee Rename column employee_id to id;
+-- drop
+Alter table employee drop column department;
